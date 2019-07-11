@@ -1,0 +1,37 @@
+language: node_js
+node_js:
+  - stable
+
+cache:
+  directories:
+    - ~/.yarn-cache
+    - node_modules
+    - www/node_modules
+
+jobs:
+  include:
+    - stage: Chrome
+      env: BROWSER=ChromeCi
+      addons:
+        chrome: stable
+    - stage: Firefox
+      env: BROWSER=Firefox
+      addons:
+        firefox: latest
+
+services:
+  - xvfb
+
+before_install:
+  - export DISPLAY=:99.0
+
+install:
+  - yarn bootstrap
+
+after_success:
+  - node_modules/.bin/codecov
+
+branches:
+  only:
+    - master
+    - next

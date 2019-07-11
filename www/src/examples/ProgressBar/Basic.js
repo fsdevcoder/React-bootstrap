@@ -1,0 +1,1 @@
+<ProgressBar now={60} />;
